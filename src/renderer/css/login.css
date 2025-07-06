@@ -1,0 +1,103 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap');
+
+
+.complogin {
+
+    background-color: rgb(223, 223, 223);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #102961;
+    border-radius: 15px;
+    margin: 1%;
+    flex-direction: column;
+    border-radius: 15px;
+    background: #EEE;
+    box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.25);
+    width: 30%;
+    height: 50% ;
+    flex-shrink: 0;
+    justify-content: space-around;
+}
+
+.login {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+
+}
+
+.Logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80px;
+}
+
+.Logo img {
+    width: 120px;
+}
+
+.Imagem {
+    width: 100%;
+    height: 10px;
+}
+
+h2 {
+    color: #102961;
+    font-size: 1.75rem;
+    /* aproximadamente 28px */
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.complogin input {
+    width: 100%;
+    height: 2.5rem;
+    flex-shrink: 0;
+    fill: #FFF;
+    box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.25) inset;
+    border: 0;
+    margin-top: 2%;
+    color: #686868;
+    font-size: 15px;
+    font-style: normal;
+    line-height: normal;
+    padding-left: 2%;
+}
+
+.button {
+    width: 35%;
+    height: 3rem;
+    flex-shrink: 0;
+    background-color: #004F9E;
+    box-shadow: 0.125rem 0.125rem 0.25rem rgba(0, 0, 0, 0.25) inset;
+    color: #FFF;
+    font-size: 90%;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    font-weight: 600;
+    width: 80%;
+    margin: 0 auto;
+    gap: 0.5rem;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

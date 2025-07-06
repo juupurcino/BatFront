@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap');
+
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: #ffffff;
+    font-family: 'Nunito', sans-serif;
+    margin: 0px;
+  }
+.text_menu {
+  position: relative;
+  text-decoration: none;
+  color: black;
+  padding-bottom: 5px;
+  margin: 0 15px;
+}
+
+.text_menu::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0%;
+  height: 2px;
+  background-color: #2f73d9;
+  transform: translateX(-50%);
+  transform-origin: center;
+  transition: width 0.3s ease;
+}
+
+/* Hover: anima do centro para as laterais */
+.text_menu:hover::after {
+  width: 100%;
+}
+
+/* Quando ativo, sublinhado permanece */
+.text_menu.active::after {
+  width: 100%;
+}
+
+
+body {
+  font-family: "Nunito", sans-serif;
+}
+
+.AbaSuperior{
+  margin: 0;
+  background-color: #E5E5E5;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 80px;
+}
+
+.Logo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+}
+
+.Menu{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 3px;
+  padding: 15px;
+  width: 98%;
+}
+
+.text_menu{
+  font-size: 1.3em;
+  color: black;
+}
+
+.Y{
+  gap: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.Not{
+  gap: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  
+} 
+
+.modal {
+  padding-top: 20px;
+  max-height: 500px; /* você pode ajustar esse valor conforme necessário */
+  overflow-y: auto;
+  padding-right: 10px; /* opcional, evita o corte da barra de rolagem */
+}
+
+
+.Not img{
+  width: 28px;
+  height: 28px;
+}
+
+.Logo img{
+  width: 120px;
+}
+
+.Imagem {
+  width: 100%;
+  height: 10px;
+}

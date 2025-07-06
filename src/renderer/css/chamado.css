@@ -1,0 +1,556 @@
+/* MINI NAV CHAMADOS */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap');
+
+.abaChamado {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.container-chamados {
+  background-color: #0d2b6c;
+  border-top-left-radius: 40px;
+  border-top-right-radius: 40px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 98%;
+}
+
+.container-chamados h1 {
+  color: white;
+}
+
+.mini-navbar {
+  display: flex;
+  background-color: #0d2b6c;
+  overflow: hidden;
+  width: 90%;
+}
+
+.tab-button {
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  outline: none;
+  padding: 5px 20px;
+  width: 150px;
+}
+
+.tab-button.active {
+  background-color: white;
+  color: black;
+}
+
+.conteudo-chamado {
+  background-color: white;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  min-height: 75vh;
+  flex-direction: column;
+}
+
+/* Botão abrir */
+.abrir {
+  background-color: #9F0000;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 1em;
+  padding: 8px 35px;
+}
+
+.abrir:hover {
+  background-color: #b90000;
+  cursor: pointer;
+}
+
+/* Botão filtro */
+.but_filtro {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+/* Filtro */
+.filter {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 98%;
+  justify-content: end;
+  margin: 20px;
+  gap: 2%;
+}
+
+.filter img {
+  width: 30px;
+  height: 30px;
+}
+
+/* Lista de chamados */
+.chamados {
+  width: 90%;
+  padding: 5px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* CARD CHAMADO */
+
+.card-chamado {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 24px;
+  border-radius: 4px;
+  background-color: white;
+  margin: 16px 0;
+  width: 80%;
+  box-shadow: 0 4px 12px rgba(2, 2, 0.3, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.card-chamado:hover {
+  transform: scale(1.01);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* Colunas */
+.coluna-esquerda,
+.coluna-centro,
+.coluna-direita {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.coluna-esquerda {
+  flex: 1;
+}
+
+.coluna-centro {
+  flex: 1.5;
+}
+
+.coluna-direita {
+  flex: 1;
+  align-items: end;
+}
+
+/* Tipografia */
+.card-chamado strong {
+  font-size: 1.05rem;
+  color: #1a1a1a;
+}
+
+.card-chamado p {
+  margin: 4px 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.status {
+  font-weight: bold;
+  margin-top: 4px;
+}
+
+/* Data */
+.data {
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-size: 0.95rem;
+}
+
+/* Prioridade visual */
+.prioridade {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.bolinha {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+/* Chamado aberto */
+.chamadoaberto { 
+  min-width: 60%;
+}
+
+/* Paginação */
+.arrow {
+  width: 15px;
+  height: auto;
+  cursor: pointer;
+}
+
+.arrow.left {
+  transform: scaleX(-1);
+}
+
+.pagination {
+  margin-bottom: 5px;
+  align-items: center;
+  display: flex;
+}
+
+.pagination button {
+  background: none;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+}
+
+.pagination button.active {
+  font-weight: bold;
+}
+
+.pagination button.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background-color: #007bff;
+  border-radius: 2px;
+}
+
+
+/* ---- ESTILOS PARA O NOVO MODAL DE CHAMADO ---- */
+
+/* Substitui a antiga classe .chamadoaberto e .modal-content */
+.modal-content-revamped {
+  background-color: #f8f9fa; /* Um cinza bem claro para o fundo */
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 700px; /* Define uma largura máxima */
+  overflow: hidden; /* Garante que os cantos arredondados sejam aplicados em tudo */
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- CABEÇALHO --- */
+.modal-header {
+  background-color: #0d2b6c; /* Azul corporativo */
+  color: white;
+  padding: 20px 24px;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.modal-header .header-title {
+  margin: 4px 0 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+/* --- LINHA DO TEMPO --- */
+.timeline-container {
+  padding: 24px;
+  background-color: #fff;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.timeline-container h3 {
+    margin-top: 0;
+    margin-bottom: 28px;
+    font-size: 1.2rem;
+    color: #333;
+    text-align: center;
+}
+
+.timeline-status {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 10px; /* Alinha com o centro do círculo */
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #e9ecef; /* Linha de fundo */
+    z-index: 0;
+}
+
+.timeline-line-progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #0d2b6c; /* Cor do progresso */
+    transition: width 0.4s ease;
+}
+
+.timeline-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  position: relative;
+}
+
+.step-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #fff;
+  border: 3px solid #e9ecef; /* Círculo padrão */
+  transition: all 0.4s ease;
+}
+
+.step-label {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  color: #6c757d; /* Cor da label padrão */
+  font-weight: 500;
+}
+
+/* Estilos de status */
+.timeline-step.completed .step-circle {
+  border-color: #0d2b6c; /* Azul para completado */
+  background-color: #0d2b6c;
+}
+
+.timeline-step.active .step-circle {
+    border-color: #0d2b6c;
+    transform: scale(1.2); /* Destaca o passo atual */
+}
+
+.timeline-step.completed .step-label {
+  color: #0d2b6c; /* Azul para label completada */
+  font-weight: 600;
+}
+
+/* --- CORPO DOS DETALHES --- */
+.modal-body {
+  padding: 24px;
+  background-color: #fff;
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Duas colunas */
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-item strong {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.detail-item p {
+  font-size: 1rem;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* Reutilizando e melhorando sua classe de prioridade */
+.prioridade {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  padding: 4px 8px;
+  border-radius: 16px;
+  width: fit-content;
+}
+
+.prioridade .bolinha {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.prioridade-baixa { background-color: #ccf3d3; color: #036d19; }
+.prioridade-baixa .bolinha { background-color: #4caf50; }
+
+.prioridade-media { background-color: #fff4cc; color: #b48c00; }
+.prioridade-media .bolinha { background-color: #ffc107; }
+
+.prioridade-alta { background-color: #f8d7da; color: #721c24; }
+.prioridade-alta .bolinha { background-color: #dc3545; }
+
+/* --- ATUALIZAÇÃO DE STATUS --- */
+.update-status-section {
+  padding: 20px 24px;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.update-status-section label {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.update-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.update-controls select {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.btn-save {
+  background-color: #0d2b6c;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-save:hover {
+  background-color: #0a2254;
+}
+
+/* --- RODAPÉ --- */
+.modal-footer {
+  padding: 16px 24px;
+  display: flex;
+  justify-content: flex-end; /* Alinha o botão à direita */
+}
+
+.btn-close {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-close:hover {
+  background-color: #5a6268;
+}
+
+
+/* --- Estilos para o Modal de Filtro --- */
+
+/* Corpo do modal de filtro */
+.filtro-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Espaçamento entre os campos de filtro */
+  padding: 10px 25px; /* Espaçamento interno */
+}
+
+.filtro-modal-body label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: -10px; /* Aproxima a label do seu select */
+  font-size: 0.9rem;
+}
+
+.filtro-modal-body select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+/* Rodapé do modal de filtro com os botões */
+.filtro-modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Alinha os botões à direita */
+  gap: 12px;
+  padding: 20px 25px;
+  border-top: 1px solid #e9ecef; /* Linha separadora */
+  background-color: #f8f9fa;
+}
+
+.btn-salvar-filtro,
+.btn-limpar {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-limpar {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-limpar:hover {
+  background-color: #5a6268;
+}
+
+.btn-salvar-filtro {
+  background-color: #0d2b6c; /* Cor principal da sua identidade */
+  color: white;
+}
+
+.btn-salvar-filtro:hover {
+  background-color: #0a2254; /* Um tom mais escuro para o hover */
+}
+
+
+.btn-cancel {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-cancel:hover {
+  background-color: #c0392b;
+}

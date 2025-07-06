@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&display=swap');
+
+
+.bolaTempo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  background-color: #f50;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.linhaTempo {
+  width: 2px;
+  height: 270px;
+  background: #c1c1c1;
+}
+
+.tempo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.card {
+  border-top: 3px solid #102961; 
+  border-radius: 5px 5px 0 0;
+  background: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 1%;
+  width: 55%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  height: 225px;
+}
+
+
+.cardHist {
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  margin: 1%;
+  width: 25%;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  padding-top: 1%;
+  height: 210px;
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  flex-direction: column;
+  border-top: 3px solid #102961; 
+}
+
+.mainCard {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.data {
+  color: #000;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0.6%;
+  margin-left: 1.2%;
+}
+
+.font {
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 2%;
+}
+
+.fontBold {
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-right: 2%;
+}
+
+.pagCard {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 300px; /* define altura base para card e cardHist */
+}
+
+.inputDesc {
+  background-color: #d9d9d9;
+  color: #000;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-right: 2%;
+  padding: 1%;
+  width: 90%;
+  height: 40px;
+}
+
+.desc {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2%;
+}
+
+.arruma {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 150px;
+}
+
+/* Botões Histórico */
+.botao-maq {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 20px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  font-size: small;
+}
+
+.botao-maq.finalizado {
+  background-color: #4caf50;
+}
+
+.botao-maq.aberto {
+  background-color: #f44336;
+}
+
+.botao-maq.em-andamento {
+  background-color: #ff9800;
+}
+
+.arrumaHist {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+img{
+  width: 70%;
+}
