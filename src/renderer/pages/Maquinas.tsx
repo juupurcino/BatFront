@@ -265,19 +265,50 @@ export default function App() {
             </>
           ) : (
             currentItems.map((maquina) => (
-              <div key={maquina.ID} className="card-container">
-                <CardMaquina
-                  id={maquina.ID}
-                  descricao={maquina.Descricao}
-                  dataCompra={maquina.DataCompra}
-                  idSetor={maquina.Setor}
-                  onDelete={() => excluirMaquina(maquina.ID)}
-                  onEdit={() => handleEditarMaquina(maquina)}
-                />
-              </div>
-            ))
+  <div key={maquina.ID} className="card-container">
+    <div onClick={() => handleSelecionarMaquina(maquina.ID)}>
+      <CardMaquina
+        id={maquina.ID}
+        descricao={maquina.Descricao}
+        dataCompra={maquina.DataCompra}
+        idSetor={maquina.Setor}
+        onDelete={() => excluirMaquina(maquina.ID)}
+        onEdit={() => handleEditarMaquina(maquina)}
+      />
+      </div>
+
+      {/* Histórico de chamados */}
+      <div className={`historico ${maquinaSelecionadaId === maquina.ID ? 'aberto' : ''}`}>
+        {maquinaSelecionadaId === maquina.ID && (
+          <>
+            <h4>Histórico de Chamados</h4>
+            {chamados.filter((chamado) => chamado.IDMaquina === maquina.ID).length > 0 ? (
+              chamados
+                .filter((chamado) => chamado.IDMaquina === maquina.ID)
+                .map((chamado) => (
+                  <CardHistMaquina
+                    key={chamado.Id}
+                    id={chamado.Id}
+                    dataChamado={chamado.DataCriacao}
+                    funcionario={chamado.NomeFuncionario}
+                    tecnico={chamado.NomeTecnico}
+                    descricao={chamado.Descricao}
+                    feedback={chamado.Feedback}
+                  />
+                ))
+            ) : (
+              <p>Nenhum chamado encontrado para esta máquina.</p>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  ))
+
           )}
         </div>
+
+        
 
         {maquinasFiltradas.length > 0 && (
           <div className="pagination">
