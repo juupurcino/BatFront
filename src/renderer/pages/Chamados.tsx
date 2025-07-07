@@ -76,14 +76,14 @@ export default function Chamados() {
 
   // --- Efeitos para Carregamento de Dados (Fetch) ---
   useEffect(() => {
-    fetch('http://localhost:5000/setores')
+    fetch('https://batback.onrender.com/setores')
       .then((res) => res.json())
       .then(setSetores);
-    fetch('http://localhost:5000/tecnicos')
+    fetch('https://batback.onrender.com/tecnicos')
       .then((res) => res.json())
       .then(setTecnicos);
 
-    fetch('http://localhost:5000/chamados')
+    fetch('https://batback.onrender.com/chamados')
       .then((response) => response.json())
       .then((data) => {
         setChamadosTodos(data);
@@ -98,7 +98,7 @@ export default function Chamados() {
 
   useEffect(() => {
     if (formData.setor) {
-      fetch(`http://localhost:5000/maquinas/${formData.setor}`)
+      fetch(`https://batback.onrender.com/maquinas/${formData.setor}`)
         .then((res) => res.json())
         .then(setMaquinas);
     } else {
@@ -164,7 +164,7 @@ export default function Chamados() {
       IDMaquina: parseInt(maquina),
     };
     try {
-      const response = await fetch('http://localhost:5000/chamados', {
+      const response = await fetch('https://batback.onrender.com/chamados', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(chamadoData),

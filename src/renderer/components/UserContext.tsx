@@ -19,7 +19,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-      fetch("http://localhost:5000/session", {
+      fetch("https://batback.onrender.com/session", {
         method: "GET",
         credentials: "include",
       })

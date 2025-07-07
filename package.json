@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "version" : "1.7.1",
-  "proxy": "http://localhost:5000",
+  "proxy": "https://batback.onrender.com/",
   "description": "A foundation for scalable desktop apps",
   "keywords": [
     "electron",

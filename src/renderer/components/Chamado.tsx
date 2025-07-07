@@ -16,7 +16,7 @@ export default function Chamado({ isOpen, onClose, chamado, user }: ChamadoProps
 
   const handleStatusUpdate = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/chamados/${chamado.IDChamado}/status`, {
+      const response = await fetch(`https://batback.onrender.com//chamados/${chamado.IDChamado}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export default function Chamado({ isOpen, onClose, chamado, user }: ChamadoProps
   if (!confirmar) return;
 
   try {
-    const response = await fetch(`http://localhost:5000/chamados/${chamado.IDChamado}/cancelar`, {
+    const response = await fetch(`https://batback.onrender.com//chamados/${chamado.IDChamado}/cancelar`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

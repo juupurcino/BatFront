@@ -51,7 +51,7 @@ export default function App() {
   const [selectedSetorId, setSelectedSetorId] = useState('');
 
   const fetchMaquinas = () => {
-    fetch('http://localhost:5000/maquinas')
+    fetch('https://batback.onrender.com/maquinas')
       .then((response) => response.json())
       .then((data) => {
         setMaquinas(data);
@@ -62,11 +62,11 @@ export default function App() {
 
   useEffect(() => {
     fetchMaquinas();
-    fetch('http://localhost:5000/chamados')
+    fetch('https://batback.onrender.com/chamados')
       .then((response) => response.json())
       .then((data) => setChamadosTodos(data))
       .catch((error) => console.error('Erro ao buscar chamados:', error));
-    fetch('http://localhost:5000/setores')
+    fetch('https://batback.onrender.com/setores')
       .then((res) => res.json())
       .then(setSetores);
   }, []);
@@ -120,8 +120,8 @@ export default function App() {
     };
     const method = maquinaSelecionadaId ? 'PUT' : 'POST';
     const url = maquinaSelecionadaId
-      ? `http://localhost:5000/maquinas/${maquinaSelecionadaId}`
-      : 'http://localhost:5000/maquinas';
+      ? `https://batback.onrender.com/maquinas/${maquinaSelecionadaId}`
+      : 'https://batback.onrender.com/maquinas';
     fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -147,7 +147,7 @@ export default function App() {
 
   const excluirMaquina = (id: number) => {
     if (confirm('Tem certeza que deseja excluir esta máquina?')) {
-      fetch(`http://localhost:5000/maquinas/${id}`, { method: 'DELETE' })
+      fetch(`https://batback.onrender.com/maquinas/${id}`, { method: 'DELETE' })
         .then((res) => {
           if (!res.ok) throw new Error('Erro ao excluir máquina');
           fetchMaquinas();
