@@ -1,5 +1,6 @@
 {
   "name": "electron-react-boilerplate",
+  "version" : "1.7.1",
   "proxy": "http://localhost:5000",
   "description": "A foundation for scalable desktop apps",
   "keywords": [
@@ -176,8 +177,8 @@
     "webpack-merge": "^6.0.1"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "BatBrasil 1.0.0",
+    "appId": "com.BatBrasil.app",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -216,10 +217,9 @@
       ]
     },
     "win": {
-      "target": [
-        "nsis"
-      ]
-    },
+  "target": ["nsis"],
+  "icon": "assets/iconBatBrasil_256.ico"
+},
     "linux": {
       "target": [
         "AppImage"
