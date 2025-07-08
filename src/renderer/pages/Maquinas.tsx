@@ -122,6 +122,7 @@ export default function App() {
     const url = maquinaSelecionadaId
       ? `https://batback.onrender.com/maquinas/${maquinaSelecionadaId}`
       : 'https://batback.onrender.com/maquinas';
+
     fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
@@ -132,7 +133,9 @@ export default function App() {
         return response.json();
       })
       .then(() => {
-        fetchMaquinas();
+        setTimeout(() => {
+          fetchMaquinas();
+        }, 300);
         setModalOpen(false);
         setNovaDescricao('');
         setNovaDataCompra('');
@@ -150,7 +153,11 @@ export default function App() {
       fetch(`https://batback.onrender.com/maquinas/${id}`, { method: 'DELETE' })
         .then((res) => {
           if (!res.ok) throw new Error('Erro ao excluir máquina');
-          fetchMaquinas();
+
+          setMaquinas((prev) => prev.filter((maq) => maq.ID !== id));
+          setMaquinasFiltradas((prev) => prev.filter((maq) => maq.ID !== id));
+
+          setMaquinaSelecionadaId((prev) => (prev === id ? null : prev));
         })
         .catch((err) => {
           console.error(err);
@@ -247,11 +254,12 @@ export default function App() {
               <img src={filtro} alt="Filtrar" />
             </button>
           </div>
-          <div className='abrir-chamado'>
+          <div className="abrir-chamado">
             {(user?.funcao === 4 || user?.funcao === 5) && (
-                <button type="button" onClick={() => setModalOpen(true)}>Cadastrar Máquina</button>
-              )}
-            
+              <button type="button" onClick={() => setModalOpen(true)}>
+                Cadastrar Máquina
+              </button>
+            )}
           </div>
         </div>
 
@@ -265,50 +273,51 @@ export default function App() {
             </>
           ) : (
             currentItems.map((maquina) => (
-  <div key={maquina.ID} className="card-container">
-    <div onClick={() => handleSelecionarMaquina(maquina.ID)}>
-      <CardMaquina
-        id={maquina.ID}
-        descricao={maquina.Descricao}
-        dataCompra={maquina.DataCompra}
-        idSetor={maquina.Setor}
-        onDelete={() => excluirMaquina(maquina.ID)}
-        onEdit={() => handleEditarMaquina(maquina)}
-      />
-      </div>
-
-      {/* Histórico de chamados */}
-      <div className={`historico ${maquinaSelecionadaId === maquina.ID ? 'aberto' : ''}`}>
-        {maquinaSelecionadaId === maquina.ID && (
-          <>
-            <h4>Histórico de Chamados</h4>
-            {chamados.filter((chamado) => chamado.IDMaquina === maquina.ID).length > 0 ? (
-              chamados
-                .filter((chamado) => chamado.IDMaquina === maquina.ID)
-                .map((chamado) => (
-                  <CardHistMaquina
-                    key={chamado.Id}
-                    id={chamado.Id}
-                    dataChamado={chamado.DataCriacao}
-                    funcionario={chamado.NomeFuncionario}
-                    tecnico={chamado.NomeTecnico}
-                    descricao={chamado.Descricao}
-                    feedback={chamado.Feedback}
+              <div key={maquina.ID} className="card-container">
+                <div onClick={() => handleSelecionarMaquina(maquina.ID)}>
+                  <CardMaquina
+                    id={maquina.ID}
+                    descricao={maquina.Descricao}
+                    dataCompra={maquina.DataCompra}
+                    idSetor={maquina.Setor}
+                    onDelete={() => excluirMaquina(maquina.ID)}
+                    onEdit={() => handleEditarMaquina(maquina)}
                   />
-                ))
-            ) : (
-              <p>Nenhum chamado encontrado para esta máquina.</p>
-            )}
-          </>
-        )}
-      </div>
-    </div>
-  ))
+                </div>
 
+                {/* Histórico de chamados */}
+                <div
+                  className={`historico ${maquinaSelecionadaId === maquina.ID ? 'aberto' : ''}`}
+                >
+                  {maquinaSelecionadaId === maquina.ID && (
+                    <>
+                      <h4>Histórico de Chamados</h4>
+                      {chamados.filter(
+                        (chamado) => chamado.IDMaquina === maquina.ID,
+                      ).length > 0 ? (
+                        chamados
+                          .filter((chamado) => chamado.IDMaquina === maquina.ID)
+                          .map((chamado) => (
+                            <CardHistMaquina
+                              key={chamado.Id}
+                              id={chamado.Id}
+                              dataChamado={chamado.DataCriacao}
+                              funcionario={chamado.NomeFuncionario}
+                              tecnico={chamado.NomeTecnico}
+                              descricao={chamado.Descricao}
+                              feedback={chamado.Feedback}
+                            />
+                          ))
+                      ) : (
+                        <p>Nenhum chamado encontrado para esta máquina.</p>
+                      )}
+                    </>
+                  )}
+                </div>
+              </div>
+            ))
           )}
         </div>
-
-        
 
         {maquinasFiltradas.length > 0 && (
           <div className="pagination">

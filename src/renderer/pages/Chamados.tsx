@@ -6,12 +6,10 @@ import Modal from '../components/Modal';
 import Chamado from '../components/Chamado';
 import { useUser } from '../components/UserContext';
 
-// Importe os ícones
 import filtro from '../../../assets/filter.png';
 import arrow from '../../../assets/arrow.png';
 import SkeletonCard from '../components/SkeletonCard';
 
-// --- Interfaces de Tipagem ---
 interface IChamado {
   ID: number;
   Descricao: string;
@@ -23,6 +21,7 @@ interface IChamado {
   Nivel: string;
   IDMaquina: number;
   Feedback: string;
+  JustificativaCancelamento?: string;
 }
 
 interface ISelectOption {
@@ -35,37 +34,30 @@ interface IMaquinaOption {
   descricao: string;
 }
 
-// --- Componente Principal ---
 export default function Chamados() {
   const { user } = useUser();
 
-  // --- Estados para Gerenciamento de Dados e UI ---
   const [activeTab, setActiveTab] = useState('todos');
   const [chamadosTodos, setChamadosTodos] = useState<IChamado[]>([]);
   const [chamadosMeus, setChamadosMeus] = useState<IChamado[]>([]);
   const [chamadosFiltrados, setChamadosFiltrados] = useState<IChamado[]>([]);
 
-  // --- Estados para Modais ---
   const [isNovoChamadoModalOpen, setNovoChamadoModalOpen] = useState(false);
-  const [isDetalheChamadoModalOpen, setDetalheChamadoModalOpen] =
-    useState(false);
+  const [isDetalheChamadoModalOpen, setDetalheChamadoModalOpen] = useState(false);
   const [isFiltroModalOpen, setFiltroModalOpen] = useState(false);
   const [selectedChamado, setSelectedChamado] = useState<IChamado | null>(null);
 
-  // --- Estados para Filtros ---
   const initialFilters = { prioridade: '', tecnico: '', maquina: '' };
-  const [filtrosSelecionados, setFiltrosSelecionados] =
-    useState(initialFilters);
+  const [filtrosSelecionados, setFiltrosSelecionados] = useState(initialFilters);
   const [filtrosAtivos, setFiltrosAtivos] = useState(initialFilters);
 
-  // --- Estados para Paginação ---
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  // --- Estados para os dados dos formulários e filtros ---
   const [setores, setSetores] = useState<ISelectOption[]>([]);
   const [maquinas, setMaquinas] = useState<IMaquinaOption[]>([]);
   const [tecnicos, setTecnicos] = useState<ISelectOption[]>([]);
+  const [ordenacaoData, setOrdenacaoData] = useState<'maisRecentes' | 'maisAntigos'>('maisRecentes');
   const [formData, setFormData] = useState({
     setor: '',
     maquina: '',
@@ -74,7 +66,22 @@ export default function Chamados() {
     descricao: '',
   });
 
-  // --- Efeitos para Carregamento de Dados (Fetch) ---
+  const carregarChamados = () => {
+    fetch('https://batback.onrender.com/chamados')
+      .then((response) => response.json())
+      .then((data: IChamado[]) => {
+        setChamadosTodos(Array.isArray(data) ? data : []);
+        setChamadosMeus(
+          Array.isArray(data)
+            ? data.filter((c: IChamado) =>
+                user?.ruf ? c.IDTecnico === user.ruf : c.NomeTecnico === user?.nome
+              )
+            : []
+        );
+      })
+      .catch((error) => console.error('Erro ao buscar chamados:', error));
+  };
+
   useEffect(() => {
     fetch('https://batback.onrender.com/setores')
       .then((res) => res.json())
@@ -83,17 +90,7 @@ export default function Chamados() {
       .then((res) => res.json())
       .then(setTecnicos);
 
-    fetch('https://batback.onrender.com/chamados')
-      .then((response) => response.json())
-      .then((data) => {
-        setChamadosTodos(data);
-        if (user?.nome) {
-          setChamadosMeus(
-            data.filter((c: IChamado) => c.NomeTecnico === user.nome),
-          );
-        }
-      })
-      .catch((error) => console.error('Erro ao buscar chamados:', error));
+    carregarChamados();
   }, [user]);
 
   useEffect(() => {
@@ -106,27 +103,28 @@ export default function Chamados() {
     }
   }, [formData.setor]);
 
-  // --- Efeito para Aplicar Filtros na Lista de Chamados ---
   useEffect(() => {
     const baseList = activeTab === 'todos' ? chamadosTodos : chamadosMeus;
 
-    const filtrados = baseList.filter((chamado) => {
-      const matchPrioridade =
-        !filtrosAtivos.prioridade || chamado.Nivel === filtrosAtivos.prioridade;
-      const matchTecnico =
-        !filtrosAtivos.tecnico || chamado.NomeTecnico === filtrosAtivos.tecnico;
+    const filtrados = baseList?.filter((chamado) => {
+      const matchPrioridade = !filtrosAtivos.prioridade || chamado.Nivel === filtrosAtivos.prioridade;
+      const matchTecnico = !filtrosAtivos.tecnico || chamado.NomeTecnico === filtrosAtivos.tecnico;
       return matchPrioridade && matchTecnico;
+    }) || [];
+
+    const ordenados = filtrados.sort((a, b) => {
+      const dataA = new Date(a.DataCriacao).getTime();
+      const dataB = new Date(b.DataCriacao).getTime();
+      return ordenacaoData === 'maisRecentes' ? dataB - dataA : dataA - dataB;
     });
 
-    setChamadosFiltrados(filtrados);
-  }, [chamadosTodos, chamadosMeus, activeTab, filtrosAtivos]);
+    setChamadosFiltrados(ordenados);
+  }, [chamadosTodos, chamadosMeus, activeTab, filtrosAtivos, ordenacaoData]);
 
-  // --- Efeito para Resetar a Paginação ao Mudar Filtros ou Abas ---
   useEffect(() => {
     setCurrentPage(1);
   }, [filtrosAtivos, activeTab]);
 
-  // --- Handlers para Ações de Filtro ---
   const handleFiltroChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFiltrosSelecionados((prev) => ({ ...prev, [name]: value }));
@@ -141,10 +139,7 @@ export default function Chamados() {
     setFiltrosSelecionados(initialFilters);
   };
 
-  // --- Handlers para Ações Gerais ---
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
-  ) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -159,7 +154,7 @@ export default function Chamados() {
       Descricao: descricao,
       IDFuncionario: user?.ruf,
       IDTecnico: parseInt(tecnico),
-      IDStatus: 1,
+      IDStatus: 3,
       IDDificuldade: parseInt(nivel),
       IDMaquina: parseInt(maquina),
     };
@@ -172,6 +167,7 @@ export default function Chamados() {
       if (response.ok) {
         alert('Chamado aberto com sucesso!');
         setNovoChamadoModalOpen(false);
+        carregarChamados();
       } else {
         alert('Erro ao abrir chamado.');
       }
@@ -186,13 +182,9 @@ export default function Chamados() {
     setDetalheChamadoModalOpen(true);
   };
 
-  // --- Lógica de Paginação ---
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = chamadosFiltrados.slice(
-    indexOfFirstItem,
-    indexOfLastItem,
-  );
+  const currentItems = chamadosFiltrados.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(chamadosFiltrados.length / itemsPerPage);
 
   const goToPage = (pageNumber: number) => setCurrentPage(pageNumber);
@@ -201,14 +193,15 @@ export default function Chamados() {
 
   return (
     <>
-      {/* --- Seção de Modais --- */}
       <Chamado
         isOpen={isDetalheChamadoModalOpen}
-        onClose={() => setDetalheChamadoModalOpen(false)}
+        onClose={() => {
+          setDetalheChamadoModalOpen(false);
+          carregarChamados();
+        }}
         chamado={selectedChamado}
         user={user}
       />
-
       <Modal
         isOpen={isNovoChamadoModalOpen}
         onClose={() => setNovoChamadoModalOpen(false)}
@@ -351,17 +344,39 @@ export default function Chamados() {
 
           <div className="conteudo-chamado">
             <div className="filter">
-              <button
-                onClick={() => setFiltroModalOpen(true)}
-                className="but_filtro"
-              >
-                <img src={filtro} alt="Filtrar Chamados" />
-              </button>
-              {(user?.funcao === 1 || user?.funcao === 4 || user?.funcao === 5 ) && (
-                <button onClick={() => setNovoChamadoModalOpen(true)} className='abrir'>
-                  Abrir Chamado
+              <div className="ordenacao-container">
+                <label htmlFor="ordenar-data">Ordenar por:</label>
+                <select
+                  id="ordenar-data"
+                  value={ordenacaoData}
+                  onChange={(e) =>
+                    setOrdenacaoData(
+                      e.target.value as 'maisRecentes' | 'maisAntigos',
+                    )
+                  }
+                >
+                  <option value="maisRecentes">Mais Recentes</option>
+                  <option value="maisAntigos">Mais Antigos</option>
+                </select>
+              </div>
+
+              <div className="acoes-direita">
+                <button
+                  onClick={() => setFiltroModalOpen(true)}
+                  className="but_filtro"
+                  title="Filtrar Chamados"
+                >
+                  <img src={filtro} alt="Filtrar Chamados" />
                 </button>
-              )}
+                {(user?.funcao === 1 || user?.funcao === 4) && (
+                  <button
+                    onClick={() => setNovoChamadoModalOpen(true)}
+                    className="abrir"
+                  >
+                    Abrir Chamado
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="chamados">

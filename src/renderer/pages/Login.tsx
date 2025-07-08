@@ -1,32 +1,31 @@
 import '../css/login.css';
-import linha from '../../../assets/linha.jpg'
-import logo from '../../../assets/logo.png'
+import linha from '../../../assets/linha.jpg';
+import logo from '../../../assets/logo.png';
 import { Link } from 'react-router-dom';
-import React, {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../components/UserContext'; // ajuste o caminho se necessário
 
 interface StatusItem {
   id: number;
-  status: string
+  status: string;
 }
 
 export default function Login() {
-
-  const [ruf, setRuf] = useState<string>("")
-  const [error, setError] = useState("");
+  const [ruf, setRuf] = useState<string>('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const { setUser } = useUser();  // pega o setUser do contexto
+  const { setUser } = useUser(); // pega o setUser do contexto
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("https://batback.onrender.com/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include", // se usar sessão no Flask
+      const res = await fetch('https://batback.onrender.com/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include', // se usar sessão no Flask
         body: JSON.stringify({ ruf }),
       });
 
@@ -37,37 +36,47 @@ export default function Login() {
           id: data.user.ruf,
           ruf: data.user.ruf,
           nome: data.user.nome,
-          funcao: data.user.funcao
+          funcao: data.user.funcao,
         });
-        navigate("/home");
+        navigate('/home');
       } else {
-        setError(data.error || "Erro ao fazer login");
+        setError(data.error || 'Erro ao fazer login');
       }
     } catch (err) {
-      setError("Erro de rede");
+      setError('Erro de rede');
     }
   };
 
   return (
     <>
       <div>
-          <img alt="icon" src={linha} className='Imagem'/>
-          <div className='Logo'>
-            <img src={logo} alt="BatBrasil"/>
-          </div>
+        <img alt="icon" src={linha} className="Imagem" />
+        <div className="Logo">
+          <img src={logo} alt="BatBrasil" />
         </div>
+      </div>
 
-        <div className='login'>
-          <form onSubmit={handleLogin} className='complogin'>
-                <h2>Login</h2>
-                <div className='input'>
-                <label htmlFor="">RRF</label>
-                <input type="number" placeholder='Digite seu RRF de funcionário...' step='1' value={ruf} onChange={(e) => setRuf(e.target.value)} required />
-                </div>
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                <button type='submit' className='button'>ENTRAR</button>
-          </form>
-        </div>
+      <div className="login">
+        <form onSubmit={handleLogin} className="complogin">
+          <h2>Login</h2>
+          <div className="input">
+            <label htmlFor="">RRF</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Digite seu RRF de funcionário..."
+              value={ruf}
+              onChange={(e) => setRuf(e.target.value)}
+              required
+            />
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <button type="submit" className="button">
+            ENTRAR
+          </button>
+        </form>
+      </div>
     </>
   );
 }
